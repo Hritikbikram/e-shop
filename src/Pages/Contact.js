@@ -1,43 +1,42 @@
 import { Breadcrumbs, Button, Input, Textarea } from '@material-tailwind/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import contact from '../Images/contact.png';
 import Footer from '../Components/Footer';
 import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContactDetail } from '../Features/InfoSlice';
 
 const Contact = () => {
 
+  const dispatch=useDispatch();
 
 
   const contdata=useFormik({
     initialValues:{
-      ContactData:{
+      
       conname:'',
       conmail:'',
       conphone:'',
       consub:'',
       conmsg:''
-      }
       
 
     },
     onSubmit:(values,{resetForm})=>{
       console.log(values);
-      // localStorage.setItem("contactname", values.ContactData.conname);
+
+      dispatch(addContactDetail(values));
       
-      // localStorage.setItem("contactmail", values.ContactData.conmail);
-      
-      // localStorage.setItem("contactphone", values.ContactData.conphone);
-      
-      // localStorage.setItem("contactsub", values.ContactData.consub);
-      
-      // localStorage.setItem("contactmsg", values.ContactData.conmsg);
 
 
       
-      resetForm();
+      // resetForm();
     },
   })
+
+  const data=useSelector((store)=>store.contact.contactDetail);
+  console.log(data);
 
 
 
@@ -77,7 +76,7 @@ const Contact = () => {
 
         </div>
 
-
+ 
 
 
         <div className='px-[10%]'>
@@ -157,28 +156,28 @@ const Contact = () => {
 
 
                     <div className='py-5'>
-                      <Input label="Your Name" name="ContactData.conname" className='rounded-3xl py-10' type='text' onSubmit={contdata.handleSubmit} onChange={contdata.handleChange} />
+                      <Input label="Your Name" name="conname" className='rounded-3xl py-10' type='text' onSubmit={contdata.handleSubmit} onChange={contdata.handleChange} />
                     </div>
 
 
                     <div className='py-5'>
-                      <Input label="Your Email" name="ContactData.conmail" className='rounded-3xl py-10' type='email' onSubmit={contdata.handleSubmit} onChange={contdata.handleChange} />
+                      <Input label="Your Email" name="conmail" className='rounded-3xl py-10' type='email' onSubmit={contdata.handleSubmit} onChange={contdata.handleChange} />
                     </div>
 
 
                     <div className='py-5'>
-                      <Input label="Phone Number" name="ContactData.conphone" className='rounded-3xl py-10' type='number' onSubmit={contdata.handleSubmit} onChange={contdata.handleChange} />
+                      <Input label="Phone Number" name="conphone" className='rounded-3xl py-10' type='number' onSubmit={contdata.handleSubmit} onChange={contdata.handleChange} />
                     </div>
 
 
                     <div className='py-5'>
-                      <Input label="Subject" name="ContactData.consub" className='rounded-3xl py-10' type='text' onSubmit={contdata.handleSubmit} onChange={contdata.handleChange} />
+                      <Input label="Subject" name="consub" className='rounded-3xl py-10' type='text' onSubmit={contdata.handleSubmit} onChange={contdata.handleChange} />
                     </div>
 
 
                     <div className='py-5'>
 
-                      <Textarea  label="Your Message" name="ContactData.conmsg" className='rounded-3xl py-10' type='text' onSubmit={contdata.handleSubmit} onChange={contdata.handleChange} ></Textarea>
+                      <Textarea  label="Your Message" name="conmsg" className='rounded-3xl py-10' type='text' onSubmit={contdata.handleSubmit} onChange={contdata.handleChange} ></Textarea>
                     </div>
 
                     <Button type='submit'>Submit</Button>

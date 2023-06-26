@@ -1,14 +1,70 @@
 import React, { useState } from 'react'
 import Footer from '../Components/Footer'
 import { Breadcrumbs, Button, Input, Typography } from '@material-tailwind/react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useFormik } from 'formik';
 
 const Cart = () => {
 
   const TABLE_HEAD = ["Product Name", "Product Code", "Price", "Quantity", "Total", "Delete"];
 
 
-  const [count,setCount]=useState(0);
+  
+
+
+     const getEmail=localStorage.getItem("email");
+    const getPassword=localStorage.getItem("password");
+    const getUsername=localStorage.getItem("username");
+    
+
+    const nav=useNavigate();
+
+    
+    
+    const shoppingdata=useSelector((store)=>store.contact.cartDetails);
+    console.log(shoppingdata);
+
+
+
+    let [count,setCount]=useState(1);
+
+
+        const orderdata=useFormik({
+      initialValues:{
+        quantity:count,
+        productid:'',
+        productname:'',
+        productprice:'',
+        userord:''
+  
+  
+      },
+      onSubmit:(values)=>
+      {
+
+        
+        values.productid=shoppingdata.productid;
+        values.productname=shoppingdata.productname;
+        values.productprice=shoppingdata.productprice;
+        values.userord=getUsername;
+        
+        if(getEmail!==null && getPassword!==null)
+        {
+
+
+          console.log(values);
+
+        }
+        else
+        {
+          nav('./Login')
+        }
+        
+      },
+
+    })
+
 
 
   return (
@@ -60,9 +116,11 @@ const Cart = () => {
     
 
     <div className='px-[10%] py-[5%]'>
+      {getEmail && getPassword?
 
-      <div className='grid grid-cols-2 gap-4 md:grid md:grid-cols-1'> 
-        <div>
+      <div > 
+        <div className='pb-[5%]'>
+
           
             <table className="table-auto text-left text-xl border">
 
@@ -89,34 +147,54 @@ const Cart = () => {
             </tr>
           </thead>
 
+
+
             <tbody>
-              <tr>
-                <td className='p-5'>Name</td>
-                <td className='p-5'>1234</td>
-                <td className='p-5'>Product Price</td>
-                <td className='p-5 flex bg-gray-100'>
-                  
-                <button onClick={()=>{
-                    setCount(count+1);
-                  }}><i className="fa-solid fa-plus border text-gray-700"></i></button>
 
-                     <p className='px-5'>{count}</p>
+            {shoppingdata.map((shops,index)=>{
+
+                if(shops.userord === getUsername)
+                {
+                  console.log("CArt ready to fetch");
+
+                  return (
+                  <tr key={index}>
+                    <td className='p-5'>{shops.productname}</td>
+                    <td className='p-5'>{shops.productid}</td>
+                    <td className='p-5'>{shops.productprice}</td>
+
+                    <td className='p-5 flex bg-gray-100'>
+                      
+                    <button onClick={()=>{
+                      
+                        setCount(count+1);
+                        orderdata.values.quantity+=1;
+                      }}><i className="fa-solid fa-plus border text-gray-700  pr-3 py-3"></i></button>
 
 
-                  <button onClick={()=>{
-                    if (count!==0)
-                    {
-                    setCount(count-1);
-                    }
-                  }}><i className="fa-solid fa-minus text-gray-700"></i></button>
+                        <Input name='quantity' value={count} onChange={orderdata.handleChange}  />
+
+
+                      <button onClick={()=>{
+                        if (count!==0)
+                        {
+                        setCount(count-1);
+                        orderdata.values.quantity-=1;
+                        }
+                      }}><i className="fa-solid fa-minus text-gray-700 pl-3 py-3"></i></button>
 
 
 
+                    </td>
+                    <td className='p-5'>Rs. 500</td>
+                    <td className='p-5'> <i className="fa-solid fa-trash text-red-900 p-5"></i></td>
+                  </tr>
+                  )
+                }
 
-                </td>
-                <td className='p-5'>Rs. 500</td>
-                <td className='p-5'> <i className="fa-solid fa-trash text-red-900 p-5"></i></td>
-              </tr>
+            })}
+
+              
             </tbody>
 
           <tfoot className='border'>
@@ -132,6 +210,8 @@ const Cart = () => {
 
 
             </table>
+
+
 
         </div>
  
@@ -183,6 +263,14 @@ const Cart = () => {
 
 
       </div>
+      
+          :
+
+          <h1>Empty Cart</h1>
+
+
+      }
+          
 
     </div>
     

@@ -3,6 +3,10 @@ import blogpic from '../Images/blog.png';
 import Footer from '../Components/Footer';
 import { NavLink, useParams } from 'react-router-dom';
 import {  useGetBlogByIdQuery } from '../Features/EcommerceApi';
+import { useFormik } from 'formik';
+import { Button, Textarea } from '@material-tailwind/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCommentDetail } from '../Features/InfoSlice';
 
 const BlogSingle = () => {
 
@@ -11,10 +15,48 @@ const BlogSingle = () => {
   console.log(data);
 
 
- fetch(`https://dummyjson.com/posts/${blogs}/comments`).then(res => res.json()).then(console.log);
+  const dispatch=useDispatch();
+
+//  fetch(`https://dummyjson.com/posts/${blogs}/comments`).then(res => res.json()).then(console.log);
 
             
+ 
+ const getEmail=localStorage.getItem("email");
+ const getPassword=localStorage.getItem("password");
+ const getUsername=localStorage.getItem("username");
 
+const comments=useFormik({
+ initialValues:{
+   comment:'',
+   username:'',
+   postid:'',
+ },
+ onSubmit:(values,resetForm)=>{
+   values.username=getUsername;
+   values.postid=data?.id;
+     if(getEmail!==null && getPassword!==null)
+     {
+     console.log(values);
+     dispatch(addCommentDetail(values));
+
+     
+
+     }
+
+     else
+     {
+       console.log("none")
+     }
+     resetForm();
+ }
+})
+
+
+
+
+
+const commentdata=useSelector((store)=>store.contact.commentDetails);
+console.log(commentdata);
   
   
 
@@ -140,17 +182,42 @@ const BlogSingle = () => {
       <hr  className='py-[1%] w-[100%] border-blue-gray-200' />
 
 
+      <div>
 
-        <div>
-          <h1  className='text-xl font-bold py-1'>UserName:</h1>
-          <p className='text-lg'>Reviews Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis molestiae eligendi, deleniti magnam corrupti aliquam. A ipsam nemo earum maxime pariatur nam, tempore voluptas magni quod obcaecati, dolores quis asperiores!</p>
-        </div>
+          
+    <form onSubmit={comments.handleSubmit}>
+              <div className="w-[100%] py-5">
+                <Textarea label="Message" name='comment' className='text-xl' onSubmit={comments.handleSubmit} onChange={comments.handleChange} />
+
+                <Button type='submit' className='mt-4'>Post</Button>
+              </div>
+        </form>
+
+      </div>
+
+
+
+
+{commentdata?.map((commentos,index)=>{
+
+if(commentos.postid===data?.id){
+  return (
+
+    
+
+    <div key={index} className='py-5'>
+      <h1  className='text-xl font-bold py-1'>{commentos.username}:</h1>
+      <p className='text-lg px-[5%]'>{commentos.comment}</p>
+    </div>
+
+  )
+}
+
+
+})
+}
         
 
-        <div>
-          <h1  className='text-xl font-bold py-1'>UserName:</h1>
-          <p className='text-lg'>Reviews Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis molestiae eligendi, deleniti magnam corrupti aliquam. A ipsam nemo earum maxime pariatur nam, tempore voluptas magni quod obcaecati, dolores quis asperiores!</p>
-        </div>
 
       </div>
 

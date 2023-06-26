@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { Breadcrumbs, Button, Input, Textarea} from '@material-tailwind/react';
+import { Breadcrumbs,  Button,  Input, Textarea} from '@material-tailwind/react';
 import Footer from '../Components/Footer';
 import product1 from '../Images/product1.png';
 import product2 from '../Images/product2.png';
@@ -9,6 +9,9 @@ import product4 from '../Images/product4.png';
 import { useGetProductByidQuery } from '../Features/EcommerceApi';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch, useSelector} from 'react-redux';
+import { addCartDetail, addReviewDetail } from '../Features/InfoSlice';
+import Review from '../Components/Review';
 
 
 const ProductDetails = () => {
@@ -16,7 +19,11 @@ const ProductDetails = () => {
 
     const {id}=useParams();
 
+    const dispatch=useDispatch();
+
     const nav =useNavigate();
+
+    
 
     const {data,isLoading}=useGetProductByidQuery(id);
     console.log(data);
@@ -64,6 +71,7 @@ const ProductDetails = () => {
           // localStorage.setItem("produser",values.userord);
 
           console.log(values);
+          dispatch(addCartDetail(values))
 
         }
         else
@@ -77,6 +85,43 @@ const ProductDetails = () => {
     })
   
 
+
+
+    const reviews=useFormik({
+      initialValues:{
+        message:'',
+        username:'',
+        productid:'',
+        productname:'',
+      },
+      onSubmit:(values,resetForm)=>
+      {
+        values.username=getUsername;
+        if(getEmail!==null && getPassword!==null)
+        {
+          
+        values.productid=data.id;
+        values.productname=data.title;
+        console.log(values);
+        dispatch(addReviewDetail(values));
+       
+        }
+
+        else
+        {
+          nav('./Login')
+        }      resetForm();
+
+        
+      }
+
+    })
+
+    
+    const reviewdata=useSelector((store)=>store.contact.reviewDetails);
+    console.log(reviewdata);
+
+
     if (isLoading) {
       return <div className='w-[32%] mx-auto mt-14'>      
   
@@ -84,6 +129,8 @@ const ProductDetails = () => {
       </div>
   }
   
+
+
 
 
   return (
@@ -282,12 +329,19 @@ const ProductDetails = () => {
               
                 <h1 className='text-3xl font-bold'>Your Review</h1>
 
-             
-              <div className="w-[100%] py-5">
-                <Textarea label="Message" className='text-xl'/>
+                {/* <Review /> */}
 
-                <Button className='mt-4'>Post</Button>
+
+                
+        <form onSubmit={reviews.handleSubmit}>
+              <div className="w-[100%] py-5">
+                <Textarea label="Message" name='message' className='text-xl' onSubmit={reviews.handleSubmit} onChange={reviews.handleChange} />
+
+                <Button type='submit' className='mt-4'>Post</Button>
               </div>
+        </form>
+
+             
 
 
 
@@ -311,10 +365,21 @@ const ProductDetails = () => {
       <hr  className='py-[1%] w-[100%] border-blue-gray-200' />
 
 
-        <div>
-          <h1  className='text-xl font-bold py-4'>UserName:</h1>
-          <p className='text-lg'>Reviews Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis molestiae eligendi, deleniti magnam corrupti aliquam. A ipsam nemo earum maxime pariatur nam, tempore voluptas magni quod obcaecati, dolores quis asperiores!</p>
-        </div>
+      {reviewdata?.map((revie,index)=>{
+
+if(revie.productid===data?.id){
+        return (
+
+          
+          
+        <div key={index} className='py-5'>
+        <h1  className='text-xl font-bold'>{revie.username}:</h1>
+        <p className='text-lg px-[5%]'>{revie.message}</p>
+      </div>
+        )
+}
+      })}
+
 
       </div>
 

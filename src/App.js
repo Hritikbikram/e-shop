@@ -16,6 +16,8 @@ import Whilist from './Pages/Whilist';
 import NotFound from './Pages/NotFound';
 import DataFilter from './Pages/DataFilter';
 import Comment from './Components/Comment';
+import Signup from './Pages-Admin/Signup';
+import ChartBar from './Components/ChartBar';
 
 
 const App = () => {
@@ -77,6 +79,13 @@ const App = () => {
 
 
         <Route path='login' element={<Login />} />
+
+
+        <Route path='signup' element={<Signup />} />
+
+
+
+        <Route path='chart' element={<ChartBar />} />
 
 
 
