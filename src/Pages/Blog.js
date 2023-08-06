@@ -86,7 +86,7 @@ const Blog = () => {
               
 
               
-                <div key={blog?.id} className='my-10'>
+                <div key={blog?.id}  onClick={()=>nav(`/single_blog/${blog?.id}`)} className='my-10 cursor-pointer'>
 
 
                 <Card className='overflow-hidden'>

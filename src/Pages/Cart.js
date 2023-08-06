@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import Footer from '../Components/Footer'
 import { Breadcrumbs, Button, Input, Typography } from '@material-tailwind/react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { addOrderDetail, deleteCart } from '../Features/InfoSlice';
 
 const Cart = () => {
 
@@ -19,11 +20,12 @@ const Cart = () => {
     
 
     const nav=useNavigate();
+    const dispatch=useDispatch();
 
     
     
     const shoppingdata=useSelector((store)=>store.contact.cartDetails);
-    console.log(shoppingdata);
+    // console.log(shoppingdata);
 
 
 
@@ -53,7 +55,7 @@ const Cart = () => {
         {
 
 
-          console.log(values);
+          // console.log(values);
 
         }
         else
@@ -64,6 +66,35 @@ const Cart = () => {
       },
 
     })
+
+
+
+    const date=new Date();
+
+    const shipformik=useFormik({
+      initialValues:{
+        name:"",
+        address:"",
+        contact:""
+      },
+      onSubmit:(values,resetForm)=>{
+        // console.log(values);
+        try{
+          const order={
+            orderuser:values,orderedItem:shoppingdata,orderedDate:date.toLocaleString(),
+          };
+          // console.log(order)
+          const res=dispatch(addOrderDetail(order));
+          console.log(res);
+          
+        }
+        catch(e){
+          console.log(e)
+        }
+
+        
+      },
+    });
 
 
 
@@ -155,7 +186,7 @@ const Cart = () => {
 
                 if(shops.userord === getUsername)
                 {
-                  console.log("CArt ready to fetch");
+                  // console.log("CArt ready to fetch");
 
                   return (
                   <tr key={index}>
@@ -172,7 +203,7 @@ const Cart = () => {
                       }}><i className="fa-solid fa-plus border text-gray-700  pr-3 py-3"></i></button>
 
 
-                        <Input name='quantity' value={count} onChange={orderdata.handleChange}  />
+                        <Input name='quantity' value={shops.quantity} onChange={orderdata.handleChange}  />
 
 
                       <button onClick={()=>{
@@ -187,7 +218,10 @@ const Cart = () => {
 
                     </td>
                     <td className='p-5'>Rs. 500</td>
-                    <td className='p-5'> <i className="fa-solid fa-trash text-red-900 p-5"></i></td>
+                    <td className='p-5'>
+                      
+                      {" "}
+                       <i className="fa-solid fa-trash text-red-900 p-5" onClick={()=>dispatch(deleteCart(shops.productid))}></i></td>
                   </tr>
                   )
                 }
@@ -197,16 +231,6 @@ const Cart = () => {
               
             </tbody>
 
-          <tfoot className='border'>
-            <tr>
-              <td className='py-5'>
-                <Button>Update</Button>
-              </td>
-
-
-
-            </tr>
-          </tfoot>
 
 
             </table>
@@ -224,38 +248,40 @@ const Cart = () => {
             <h1 className='font-bold text-lg'>Total : - </h1>
           </div>
 
+            <form onSubmit={shipformik.handleSubmit}>
+ 
+                <div className='py-5'>
+                  <Input className='rounded-r-none w-[100%]' 
+                    type='text'
+                    label='Your Name'
+                    name='name' onChange={shipformik.handleChange} value={shipformik.values.name} />
+                </div>
+
+                <div className='py-5'>
+                  <Input className='rounded-r-none w-[100%]' 
+                    type='text'
+                    label='Shipping Address'
+                    name='address' onChange={shipformik.handleChange} value={shipformik.values.address} />
+                </div>
+
+                <div className='py-5'>
+                  <Input className='rounded-r-none w-[100%]' 
+                    type='tel'
+                    label='Contact Number'
+                    name='contact'  onChange={shipformik.handleChange} value={shipformik.values.contact} />
+                </div>
 
 
-            <div className='py-5'>
-              <Input className='rounded-r-none w-[100%]' 
-                type='text'
-                label='Your Name'
-                name='custname' />
-            </div>
+{/* 
+                <div className='py-5'>
+                  <Input className='rounded-r-none w-[100%]' 
+                    type='text'
+                    label='Shipping Address'
+                    name='shipping' />
+                </div> */}
 
-            <div className='py-5'>
-              <Input className='rounded-r-none w-[100%]' 
-                type='text'
-                label='Shipping Address'
-                name='shipping' />
-            </div>
-
-            <div className='py-5'>
-              <Input className='rounded-r-none w-[100%]' 
-                type='tel'
-                label='Contact Number'
-                name='custcontact' />
-            </div>
-
-            <div className='py-5'>
-              <Input className='rounded-r-none w-[100%]' 
-                type='text'
-                label='Shipping Address'
-                name='shipping' />
-            </div>
-
-            <Button >Proceed To Checkout</Button>
-          
+                <Button type='submit'>Proceed To Checkout</Button>
+            </form>
 
 
 

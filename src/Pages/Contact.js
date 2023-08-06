@@ -31,7 +31,8 @@ const Contact = () => {
 
 
       
-      // resetForm();
+      resetForm();
+      window.location.reload();
     },
   })
 

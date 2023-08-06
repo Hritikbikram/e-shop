@@ -10,8 +10,8 @@ import { useGetProductByidQuery } from '../Features/EcommerceApi';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector} from 'react-redux';
-import { addCartDetail, addReviewDetail } from '../Features/InfoSlice';
-import Review from '../Components/Review';
+import { addCartDetail, addReviewDetail, addWhilistDetail } from '../Features/InfoSlice';
+// import Review from '../Components/Review';
 
 
 const ProductDetails = () => {
@@ -42,12 +42,17 @@ const ProductDetails = () => {
 
     const [count,setCount]=useState(1);
 
+  
+
+
+
     const productdata=useFormik({
       initialValues:{
         quantity:count,
         productid:'',
         productname:'',
         productprice:'',
+        productcategory:'',
         userord:''
   
   
@@ -59,19 +64,15 @@ const ProductDetails = () => {
         values.productid=data.id;
         values.productname=data.title;
         values.productprice=data.price;
+        values.productcategory=data.category;
         values.userord=getUsername;
         
         if(getEmail!==null && getPassword!==null)
         {
 
-          // localStorage.setItem("prodid",values.productid);
-          // localStorage.setItem("prodname",values.productname);
-          // localStorage.setItem("prodprice",values.productprice);
-          // localStorage.setItem("prodquant",values.quantity);
-          // localStorage.setItem("produser",values.userord);
-
           console.log(values);
           dispatch(addCartDetail(values))
+          window.location.reload();
 
         }
         else
@@ -84,6 +85,50 @@ const ProductDetails = () => {
       validationSchema:productschema
     })
   
+
+
+    
+    const whilistdata=useFormik({
+      initialValues:{
+        productid:'',
+        productname:'',
+        productprice:'',
+        productcategory:'',
+        userord:''
+  
+  
+      },
+      onSubmit:(values)=>
+      {
+
+        
+        values.productid=data.id;
+        values.productname=data.title;
+        values.productprice=data.price;
+        values.productcategory=data.category;
+        values.userord=getUsername;
+        
+        if(getEmail!==null && getPassword!==null)
+        {
+
+          console.log(values);
+          dispatch(addWhilistDetail(values))
+     
+
+        }
+        else
+        {
+          nav('./Login')
+        }
+        
+        
+      },
+
+      validationSchema:productschema
+    })
+
+
+
 
 
 
@@ -102,15 +147,18 @@ const ProductDetails = () => {
           
         values.productid=data.id;
         values.productname=data.title;
-        console.log(values);
         dispatch(addReviewDetail(values));
+        window.location.reload();
+
        
         }
 
         else
         {
           nav('./Login')
-        }      resetForm();
+        }      
+        
+
 
         
       }
@@ -240,7 +288,7 @@ const ProductDetails = () => {
                   </div>
 
 
-                  <div className='pt-[10%]'>
+                  {/* <div className='pt-[10%]'> */}
                       <button type='submit' onClick={()=>{
 
                           if(getPassword === null && getEmail === null)
@@ -249,19 +297,30 @@ const ProductDetails = () => {
                           }
 
 
-                      }} className='bg-orange-300  rounded-full hover:bg-orange-700 duration-500 p-4 mx-4 '>
-                        <i className="fa-solid fa-shopping-cart text-white"></i>
+                      }} className='bg-orange-300  rounded-full hover:bg-orange-700 duration-500 p-4 my-[5%] mx-4 text-white'>
+                        <i className="fa-solid fa-shopping-cart text-white pr-2"></i> Add To Cart
                       </button>
 
+                      </form>
 
-                      <NavLink className='rounded-full p-4 mx-4 hover:bg-red-900 duration-500 bg-red-400'>
-                        <i className="fa-solid fa-heart text-white"></i>
-                      </NavLink>
+                      <form onSubmit={whilistdata.handleSubmit}>
+                      <button  type='submit' onClick={()=>{
 
-                  </div>
+                        if(getPassword === null && getEmail === null)
+                        {
+                          nav('../../login')
+                        }
+
+
+                        }}  className='rounded-full p-4 pr-12 mx-4 hover:bg-red-900 duration-500 bg-red-400 text-white'>
+                        <i className="fa-solid fa-heart text-white pr-2"></i> Whilist
+                      </button>
+                      </form>
+
+                  {/* </div> */}
 
                 
-              </form>
+              
                 
             </div>
 

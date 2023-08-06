@@ -1,6 +1,6 @@
 import React from 'react';
 import { Breadcrumbs, Button, Input } from '@material-tailwind/react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 
 const Signup = () => {
 
+  const nav=useNavigate();
 
   const dispatch=useDispatch();
 
@@ -26,6 +27,7 @@ const Signup = () => {
       username:'',
       email:'',
       password:'',
+      admin:'admin'
     },
     onSubmit:(values,{resetForm})=>{
       
@@ -37,6 +39,7 @@ const Signup = () => {
       
 
       resetForm();
+      nav('../login')
     },
 
     validationSchema:signupschema

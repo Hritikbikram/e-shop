@@ -16,6 +16,7 @@ export const ecommerceapi = createApi({
     }),
 
 
+
     getProductByid:builder.query({
       query:(query)=>({
         url:`products/${query}`,
@@ -68,6 +69,15 @@ export const ecommerceapi = createApi({
       })
     }),
 
+    
+
+    getProductsByCategory:builder.query({
+      query:(query)=>({
+        url:`products/category/${query}`,
+        method:'GET'
+      })
+    }),
+
 
 
 
@@ -86,4 +96,4 @@ export const ecommerceapi = createApi({
   })
 })
 
-export const {useGetAllProductsQuery, useGetProductByidQuery,useSearchProductQuery, useGetAllBlogsQuery, useGetBlogByIdQuery,useGetAllCommentsQuery, useGetAllGategoriesQuery,useGetallusersQuery} =ecommerceapi;
+export const {useGetAllProductsQuery, useGetProductByidQuery,useSearchProductQuery, useGetAllBlogsQuery, useGetBlogByIdQuery,useGetAllCommentsQuery, useGetAllGategoriesQuery,useGetallusersQuery, useGetProductsByCategoryQuery} =ecommerceapi;

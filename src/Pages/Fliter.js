@@ -7,6 +7,9 @@ import { useGetAllProductsQuery } from '../Features/EcommerceApi';
 const Fliter = () => {
 
 
+
+  
+
   const nav =useNavigate();
   const {data,isLoading}=useGetAllProductsQuery();
  
@@ -83,18 +86,65 @@ const Fliter = () => {
 
 
                           <div>
-                            <p>Sort By : </p>
-                            <Select label="Sort By">
-        
-                              <Option>Price</Option>
-                              <Option>Popular</Option>
-                              
-        
-                            </Select>
+                            <p>Categories : </p>
+                            <Select label="Categories">
+
+                                  <Option>
+                                    
+                                      <NavLink className="hover:text-orange-300 duration-200" to='/product'>All Products</NavLink>
+                                    
+                                  </Option>
+
+                                  <Option>
+
+                                      <NavLink className="hover:text-orange-300 duration-200" to='/category/smartphones'>SmartPhones</NavLink>
+                                    
+                                  </Option>
+
+                                  <Option>
+
+                                      <NavLink className="hover:text-orange-300 duration-200" to='/category/laptops'>Laptops</NavLink>
+                                    
+                                  </Option>
+                                  
+
+                                  <Option>
+
+                                      <NavLink className="hover:text-orange-300 duration-200" to='/category/fragrances'>Fragrances</NavLink>
+                                    
+                                  </Option>
+                                  
+
+                                  <Option>
+
+                                      <NavLink className="hover:text-orange-300 duration-200" to='/category/skincare'>Skincare</NavLink>
+                                    
+                                  </Option>
+                                  
+                                  
+
+                                  <Option>
+
+                                      <NavLink className="hover:text-orange-300 duration-200" to='/category/groceries'>Groceries</NavLink>
+                                    
+                                  </Option>
+                                  
+                                  
+
+                                  <Option>
+
+                                      <NavLink className="hover:text-orange-300 duration-200" to='/category/home-decoration'>Home-Decoration</NavLink>
+                                    
+                                  </Option>
+                                  
+                                  
+
+
+                                </Select>
                           </div>
 
                           <div>
-                            <p>View:</p>
+                            {/* <p>View:</p>
                             <Select label="Sort By">
         
                               <Option>Price</Option>
@@ -102,7 +152,7 @@ const Fliter = () => {
                               
         
                             </Select>
-                            
+                             */}
                             
                           </div>
 
@@ -128,12 +178,12 @@ const Fliter = () => {
 
               {data?.products && data?.products.map((productdata,index)=>{
 
-                if(index<5){
+                if(index<20){
             
                 return (
 
                   
-                <div key={productdata?.id} className='my-10'>
+                <div key={productdata?.id} className='my-10 cursor-pointer' onClick={()=>nav(`/product_details/${productdata?.id}`)} >
                     <Card>
                       
                       <CardHeader className='w-full h-[300px]'>
@@ -184,144 +234,6 @@ const Fliter = () => {
                   }
 
                 )}
-
-{/* 
-                <div className='my-10'>
-                    <Card>
-                      
-                      <CardHeader>
-                      <img src={product2} alt='Product 2' className="w-full h-full object-cover"
-                          />
-                      </CardHeader>
-
-                      <CardBody>
-                          <div className="flex items-center justify-between mb-2">
-                            <Typography color="blue-gray" className="font-medium">
-                              Product 2
-                            </Typography>
-                            <Typography color="blue-gray" className="font-medium">
-                              Rs. 500
-                            </Typography>
-                          </div>
-                          <Typography variant="small" color="gray" className="font-normal opacity-75">
-                            With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case.
-                          </Typography>
-                      </CardBody>
-
-
-                      <CardFooter className='bg-blue-gray-100 text-center text-xl'>
-
-                          <NavLink to="/cart" className=' rounded-full hover:bg-white duration-500 p-4 mx-4 '>
-                          <i className="fa-solid fa-shopping-cart text-blue-900"></i>
-                          </NavLink>
-
-                          <NavLink to='/product_details' className='rounded-full p-4 mx-4 hover:bg-white duration-500 text-green-700 hover:text-orange-700'>
-                            <i className="fa-solid fa-magnifying-glass "></i>
-                            </NavLink>
-
-                          <NavLink to='/whilist' className='rounded-full p-4 mx-4 hover:bg-white duration-500'>
-                            <i className="fa-solid fa-heart text-red-700"></i>
-                            </NavLink>
-                            
-                      </CardFooter>
-
-
-                    </Card>
-                </div>
-
-
-
-                <div className='my-10'>
-                    <Card>
-                      
-                      <CardHeader>
-                      <img src={product3} alt='Product 3' className="w-full h-full object-cover"
-                          />
-                      </CardHeader>
-
-                      <CardBody>
-                          <div className="flex items-center justify-between mb-2">
-                            <Typography color="blue-gray" className="font-medium">
-                              Product 3
-                            </Typography>
-                            <Typography color="blue-gray" className="font-medium">
-                              Rs. 500
-                            </Typography>
-                          </div>
-                          <Typography variant="small" color="gray" className="font-normal opacity-75">
-                            With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case.
-                          </Typography>
-                      </CardBody>
-
-
-                      <CardFooter className='bg-blue-gray-100 text-center text-xl'>
-
-                                                  <NavLink to="/cart" className=' rounded-full hover:bg-white duration-500 p-4 mx-4 '>
-                          <i className="fa-solid fa-shopping-cart text-blue-900"></i>
-                          </NavLink>
-
-                          <NavLink to='/product_details' className='rounded-full p-4 mx-4 hover:bg-white duration-500 text-green-700 hover:text-orange-700'>
-                            <i className="fa-solid fa-magnifying-glass "></i>
-                            </NavLink>
-
-                          <NavLink to='/whilist' className='rounded-full p-4 mx-4 hover:bg-white duration-500'>
-                            <i className="fa-solid fa-heart text-red-700"></i>
-                            </NavLink>
-
-                      </CardFooter>
-
-
-                    </Card>
-                </div>
-
-
-
-                <div className='my-10'>
-                    <Card>
-                      
-                      <CardHeader>
-                      <img src={product4} alt='Product 4' className="w-full h-full object-cover"
-                          />
-                      </CardHeader>
-
-                      <CardBody>
-                          <div className="flex items-center justify-between mb-2">
-                            <Typography color="blue-gray" className="font-medium">
-                              Product 4
-                            </Typography>
-                            <Typography color="blue-gray" className="font-medium">
-                              Rs. 500
-                            </Typography>
-                          </div>
-                          <Typography variant="small" color="gray" className="font-normal opacity-75">
-                            With plenty of talk and listen time, voice-activated Siri access, and an available wireless charging case.
-                          </Typography>
-                      </CardBody>
-
-
-                      <CardFooter className='bg-blue-gray-100 text-center text-xl'>
-
-                                                  <NavLink to="/cart" className=' rounded-full hover:bg-white duration-500 p-4 mx-4 '>
-                          <i className="fa-solid fa-shopping-cart text-blue-900"></i>
-                          </NavLink>
-
-                          <NavLink to='/product_details' className='rounded-full p-4 mx-4 hover:bg-white duration-500 text-green-700 hover:text-orange-700'>
-                            <i className="fa-solid fa-magnifying-glass "></i>
-                            </NavLink>
-
-                          <NavLink to='/whilist' className='rounded-full p-4 mx-4 hover:bg-white duration-500'>
-                            <i className="fa-solid fa-heart text-red-700"></i>
-                            </NavLink>
-
-                      </CardFooter>
-
-
-                    </Card>
-                </div> */}
-
-
-
-
 
 
                 </div>

@@ -6,6 +6,51 @@ import brand from '../Images/brands.png'
 
 
 const Footer = () => {
+
+
+  
+  if(localStorage.getItem("isAdmin")=== "admin")
+  {
+
+    return (
+
+      <>
+  
+  
+        <div className='flex justify-center'>
+          <img src={brand} alt="Brands" />
+        </div>
+  
+  
+  
+          <div className='bg-gray-50'>
+          
+  
+              <div className='pb-6 pt-10'>
+                  
+                  <div className='flex justify-between'>
+  
+                      <p className='px-[5%] pb-6'>© 2023 Your E-commerce - All rights reserved</p>
+  
+                      <div className='pr-12'>
+                          <i className="fa-brands fa-square-facebook pr-10 text-2xl hover:text-4xl duration-500"></i>
+                          <i className="fa-brands fa-instagram pr-10 text-2xl hover:text-4xl duration-500"></i>
+                          <i className="fa-brands fa-twitter pr-10 text-2xl hover:text-4xl duration-500"></i>
+                        
+                      </div>
+  
+                  </div>
+              </div>
+  
+  
+          </div>
+      </>
+    )
+
+  }
+
+  else{
+
   return (
 
     <>
@@ -158,6 +203,8 @@ const Footer = () => {
         </div>
     </>
   )
+
+  }
 }
 
 export default Footer

@@ -23,6 +23,24 @@ export const getCartDetail=()=>{
 
 
 
+
+
+export const setWhilistDetail=(whilistcart)=>{
+  localStorage.setItem("Whilist", JSON.stringify(whilistcart));
+};
+
+
+export const getWhilistDetail=()=>{
+  const whilistresult=localStorage.getItem("Whilist");
+  return JSON.parse(whilistresult) || [];
+}
+
+
+
+
+
+
+
 export const setSignup=(signup)=>{
   localStorage.setItem("SignUp", JSON.stringify(signup));
 };
@@ -55,4 +73,16 @@ export const setComments=(comment)=>{
 export const getComments=()=>{
   const commentresult=localStorage.getItem("CommentsTab");
   return JSON.parse(commentresult) || [];
+}
+
+
+
+export const setOrders=(order)=>{
+  localStorage.setItem("Orders", JSON.stringify(order));
+};
+
+
+export const getOrders=()=>{
+  const orderresult=localStorage.getItem("Orders");
+  return JSON.parse(orderresult) || [];
 }

@@ -5,6 +5,8 @@ import { useGetallusersQuery } from '../Features/EcommerceApi'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router'
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import { useNavigate } from 'react-router';
 
 
@@ -13,10 +15,12 @@ import { useNavigate } from 'react-router'
 const Login = () => {
 
 
+  const signupinfo=useSelector((store)=>store.contact.signupDetails);
+  
+
   
   const {data}=useGetallusersQuery();
-  console.log(data);
-
+  
   const userschema=Yup.object().shape({
     email: Yup.string().email().required(),
 
@@ -48,12 +52,34 @@ const Login = () => {
 
         
       }
+      
       else
       {
-        console.log("not found")
+
+        {signupinfo.map((sign,index)=>{
+          if(values.email===sign.email && values.password ===sign.password)
+          {
+            console.log(sign.email);
+            console.log(sign.password);
+             
+            localStorage.setItem("email",values.email);
+            localStorage.setItem("password",values.password);
+            localStorage.setItem("username",sign.username);
+            localStorage.setItem("isAdmin",sign.admin);
+            nav("../chart");
+
+          }
+          else
+          {
+            console.log("No User Found")
+          }
+
+        })}
+
       }
 
       })};
+
 
       resetForm();
     },
@@ -131,6 +157,8 @@ const Login = () => {
 
 
                   </form>
+
+                  <p className=' text-gray-500'>Don't have an account? <NavLink to="../signup" className="pl-5 text-blue-800 font-bold underline">SignUp</NavLink></p>
 
                 
 

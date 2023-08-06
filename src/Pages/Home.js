@@ -2,10 +2,10 @@ import React from 'react';
 import Footer from '../Components/Footer'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Button, Card, CardBody, CardFooter, CardHeader, Input, Typography } from '@material-tailwind/react';
-import product1 from '../Images/product1.png';
-import product2 from '../Images/product2.png';
-import product3 from '../Images/product3.png';
-import product4 from '../Images/product4.png';
+// import product1 from '../Images/product1.png';
+// import product2 from '../Images/product2.png';
+// import product3 from '../Images/product3.png';
+// import product4 from '../Images/product4.png';
 
 import delivery from '../Images/delivery.png';
 import quality from '../Images/quality.png';
@@ -69,73 +69,77 @@ const Home = () => {
                   <div className='grid gap-6 grid-cols-3 md:grid md:grid-cols-1'>
 
 
-{data?.products && data?.products.map((productdata,index)=>{
+                      {data?.products && data?.products.map((productdata,index)=>{
 
-  if(index<5){
+                        if(index<5){
 
-  return (
+                        return (
 
-    
-  <div key={productdata?.id} className='my-10'>
-      <Card>
-        
-        <CardHeader className='w-full h-[300px]'>
-        <img src={`${productdata?.thumbnail}`} alt={`${productdata?.title}`} className="w-full h-full object-cover"
-            />
-        </CardHeader>
+                          
+                        <div key={productdata?.id} className='my-10'>
+                            <Card>
+                              
+                              <CardHeader className='w-full h-[300px]'>
+                              <img src={`${productdata?.thumbnail}`} alt={`${productdata?.title}`} className="w-full h-full object-cover"
+                                  />
+                              </CardHeader>
 
-        <CardBody>
-            <div className="flex items-center justify-between mb-2">
-              <Typography color="blue-gray" className="font-medium">
-              {`${productdata?.title}`}
-              </Typography>
-              <Typography color="blue-gray" className="font-medium">
-             ${`${productdata?.price}`}
-              </Typography>
-            </div>
-            <Typography variant="small" color="gray" className="opacity-75 font-bold">
-            {`${productdata?.description.substring(0,45)}...`}
-            </Typography>
-        </CardBody>
-
-
-
-                <CardFooter className='bg-blue-gray-100 text-center flex justify-evenly text-xl'>
+                              <CardBody>
+                                  <div className="flex items-center justify-between mb-2">
+                                    <Typography color="blue-gray" className="font-medium">
+                                    {`${productdata?.title}`}
+                                    </Typography>
+                                    <Typography color="blue-gray" className="font-medium">
+                                  ${`${productdata?.price}`}
+                                    </Typography>
+                                  </div>
+                                  <Typography variant="small" color="gray" className="opacity-75 font-bold">
+                                  {`${productdata?.description.substring(0,45)}...`}
+                                  </Typography>
+                              </CardBody>
 
 
-                  <div  onClick={()=>nav(`/product_details/${productdata?.id}`)} key={`${productdata?.id}`}  >
-                    <i className="fa-solid fa-magnifying-glass rounded-full text-center p-4 hover:bg-white duration-500 text-green-700 hover:text-orange-700 "></i>
+
+                                      <CardFooter className='bg-blue-gray-100 text-center flex justify-evenly text-xl'>
+
+
+                                        <div  onClick={()=>nav(`/product_details/${productdata?.id}`)} key={`${productdata?.id}`}  >
+                                          <i className="fa-solid fa-magnifying-glass rounded-full text-center p-4 hover:bg-white duration-500 text-green-700 hover:text-orange-700 "></i>
+                                          </div>
+
+                                        <div to='/whilist' >
+                                          <i className="fa-solid fa-heart text-red-700 rounded-full text-center  p-4  hover:bg-white duration-500"></i>
+                                          </div>
+                                          
+                                      </CardFooter>
+
+
+                            </Card>
+                        </div>
+
+
+                            )}
+
+                            else
+                            {
+                              return null
+                            }
+                          }
+
+                        )}
+
+
+
+
+
+
+
+
                     </div>
 
-                  <div to='/whilist' >
-                    <i className="fa-solid fa-heart text-red-700 rounded-full text-center  p-4  hover:bg-white duration-500"></i>
-                    </div>
-                    
-                </CardFooter>
-
-
-      </Card>
-  </div>
-
-
-      )}
-
-      else
-      {
-        return null
-      }
-    }
-
-  )}
-
-
-
-
-
-
-
-
-  </div>
+                      <div className='text-center'>
+                         <Button onClick={()=>nav(`/product`)}   >All Products</Button>
+                      </div>
 
 
 
@@ -229,16 +233,16 @@ const Home = () => {
 
 
 
-  <div>
-      <h1  className='text-3xl font-bold pb-5 pt-[5%] text-center'>Trending Products</h1>
+  {/* <div>
+      <h1  className='text-3xl font-bold pb-5 pt-[5%] text-center'>Trending Products</h1> */}
 
 
     
 
             
-        <div>
+        {/* <div> */}
 
-            <div className='px-[10%] py-[5%]'>
+            {/* <div className='px-[10%] py-[5%]'> */}
 
 
 
@@ -246,7 +250,7 @@ const Home = () => {
 
                 {/* Product List */}
 
-
+{/* 
                   <div>
 
 
@@ -482,18 +486,18 @@ const Home = () => {
 
 
 
-                  </div>
+                  </div> */}
 
 
               {/* Product List over */}
 
 
-            </div>
+            {/* </div> */}
 
-        </div>
+        {/* </div> */}
 
 
-      </div>
+      {/* </div> */}
 
   {/* Trending Products End */}
 
@@ -546,6 +550,12 @@ const Home = () => {
       <h1  className='text-3xl font-bold py-[2%] text-center'>Our Blogs</h1>
 
       <BlogHome />
+
+
+
+        <div className='text-center'>
+          <Button onClick={()=>nav(`/blog`)}   >All Blogs</Button>
+        </div>
 
 
 

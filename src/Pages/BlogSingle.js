@@ -38,6 +38,8 @@ const comments=useFormik({
      {
      console.log(values);
      dispatch(addCommentDetail(values));
+     window.location.reload();
+
 
      
 
@@ -73,7 +75,7 @@ console.log(commentdata);
 
         <div>
 
-          <div className='px-[10%] pt-[5%]'>
+          <div className='px-[10%] pt-[2%]'>
 
 
             <div className='grid grid-cols-3 pb-12'>

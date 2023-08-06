@@ -18,89 +18,238 @@ import DataFilter from './Pages/DataFilter';
 import Comment from './Components/Comment';
 import Signup from './Pages-Admin/Signup';
 import ChartBar from './Components/ChartBar';
+import ProductCategory from './Pages/ProductCategory';
+import { DataVisualization } from './Components/DataVisualization';
+import ScrollToTop from './Features/ScrollToTop';
 
 
 const App = () => {
-  return (
-    <>
-    <Routes>
-      <Route path='/' element={<RouteLayouts />}>
-        <Route path='/' element={<Home />} />
+
+  
+  if(localStorage.getItem("isAdmin")=== "admin")
+  {
+
+    return (
+      <>
+  
+  <ScrollToTop />
+      <Routes>
+  
+        <Route path='/' element={<RouteLayouts />}>
+          
+  
+          <Route path='chart' element={<DataVisualization />} />
+          
+          
+  
+  
+          
+          <Route path='*' element={<NotFound />} />
+  
+  
+  
+  
+        </Route>
+      </Routes>
+          
+  
+      </>
+    )
+
+
+  }
+
+  else{
+    
+    return (
+      <>
+  
+  <ScrollToTop />
+      <Routes>
+  
+        <Route path='/' element={<RouteLayouts />}>
+  
+  
+          <Route path='/' element={<Home />} />
+          
+          
+  
+  
+         
+  
+          <Route path='contact' element={<Contact />} />
+  
+  
+          <Route path='product' element={<Fliter/>}/>
+  
+  
+          <Route path='data' element={<DataFilter/>}/>
+  
+          
+  
+  
+  
+  
+          <Route path='product_details/:id' element={<ProductDetails />}/>
+  
+  
+  
+  
+          <Route path='about' element={<About />} />
+  
+  
+          <Route path='cart' element={<Cart />} />
+          
+  
+          <Route path='chart' element={<DataVisualization />} />
+          
+          
+          <Route path='whilist' element={<Whilist />} />
+          
+          
+          
+          
+          <Route path='category/:categoryname' element={<ProductCategory />} />
+          
+          
+          <Route path='search/:searchProduct' element={<Search />} />
+  
+          {/* <Route path='products/search/:searchProduct' element={<SearchDiv />} /> */}
+  
+  
+  
+          
+  
+          <Route path='FAQ' element={<Faq />} />
+  
+          <Route path='blog' element={<Blog />} />
+  
+  
+          <Route path='single_blog/:blogs' element={<BlogSingle />} />
+          
+          <Route path='comments' element={<Comment />} />
+  
+  
+  
+          <Route path='login' element={<Login />} />
+  
+  
+          <Route path='signup' element={<Signup />} />
+  
+  
+  
+          <Route path='orderchart' element={<ChartBar />} />
+  
+  
+  
+          
+          <Route path='*' element={<NotFound />} />
+  
+  
+  
+  
+        </Route>
+      </Routes>
+          
+  
+      </>
+    )
+  
+  }
+
+//   return (
+//     <>
+
+// <ScrollToTop />
+//     <Routes>
+
+//       <Route path='/' element={<RouteLayouts />}>
+
+
+//         <Route path='/' element={<Home />} />
         
         
 
 
        
 
-        <Route path='contact' element={<Contact />} />
+//         <Route path='contact' element={<Contact />} />
 
 
-        <Route path='product' element={<Fliter/>}/>
+//         <Route path='product' element={<Fliter/>}/>
 
 
-        <Route path='data' element={<DataFilter/>}/>
-
-        
-
-
-
-
-        <Route path='product_details/:id' element={<ProductDetails />}/>
-
-
-
-
-        <Route path='about' element={<About />} />
-
-
-        <Route path='cart' element={<Cart />} />
-        
-        
-        <Route path='whilist' element={<Whilist />} />
-        
-        
-        <Route path='search/:searchProduct' element={<Search />} />
-
-        {/* <Route path='products/search/:searchProduct' element={<SearchDiv />} /> */}
-
-
+//         <Route path='data' element={<DataFilter/>}/>
 
         
 
-        <Route path='FAQ' element={<Faq />} />
-
-        <Route path='blog' element={<Blog />} />
 
 
-        <Route path='single_blog/:blogs' element={<BlogSingle />} />
+
+//         <Route path='product_details/:id' element={<ProductDetails />}/>
+
+
+
+
+//         <Route path='about' element={<About />} />
+
+
+//         <Route path='cart' element={<Cart />} />
         
-        <Route path='comments' element={<Comment />} />
 
+//         <Route path='chart' element={<DataVisualization />} />
+        
+        
+//         <Route path='whilist' element={<Whilist />} />
+        
+        
+        
+        
+//         <Route path='category/:categoryname' element={<ProductCategory />} />
+        
+        
+//         <Route path='search/:searchProduct' element={<Search />} />
 
-
-        <Route path='login' element={<Login />} />
-
-
-        <Route path='signup' element={<Signup />} />
-
-
-
-        <Route path='chart' element={<ChartBar />} />
+//         {/* <Route path='products/search/:searchProduct' element={<SearchDiv />} /> */}
 
 
 
         
-        <Route path='*' element={<NotFound />} />
+
+//         <Route path='FAQ' element={<Faq />} />
+
+//         <Route path='blog' element={<Blog />} />
+
+
+//         <Route path='single_blog/:blogs' element={<BlogSingle />} />
+        
+//         <Route path='comments' element={<Comment />} />
+
+
+
+//         <Route path='login' element={<Login />} />
+
+
+//         <Route path='signup' element={<Signup />} />
+
+
+
+//         <Route path='orderchart' element={<ChartBar />} />
+
+
+
+        
+//         <Route path='*' element={<NotFound />} />
 
 
 
 
-      </Route>
-    </Routes>
+//       </Route>
+//     </Routes>
         
 
-    </>
-  )
+//     </>
+//   )
 }
 
 export default App
